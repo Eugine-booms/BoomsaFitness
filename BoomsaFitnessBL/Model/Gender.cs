@@ -3,6 +3,7 @@ namespace BoomsaFitnessBL.Model
 {/// <summary>
 /// Пол
 /// </summary>
+    [Serializable]
     public class Gender
     {
         public string Name { get; }

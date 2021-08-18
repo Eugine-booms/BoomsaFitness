@@ -5,6 +5,7 @@ namespace BoomsaFitnessBL.Model
     /// <summary>
     /// Пользователь
     /// </summary>
+    [Serializable]
     public class User
     {
         #region Свойства
@@ -41,7 +42,7 @@ namespace BoomsaFitnessBL.Model
                     Gender gender,
                     DateTime birthDate,
                     double weight,
-                    double height)
+                    double hight)
         {
             #region Проверка условий
             if (string.IsNullOrWhiteSpace(name))
@@ -60,16 +61,16 @@ namespace BoomsaFitnessBL.Model
             {
                 throw new ArgumentException("Вес не может быть <=0", nameof(weight));
             }
-            if (height <= 0)
+            if (hight <= 0)
             {
-                throw new ArgumentException("Вес не может быть меньше 0", nameof(height));
+                throw new ArgumentException("Вес не может быть меньше 0", nameof(hight));
             }
             #endregion
             Name = name;
             Gender = gender;
             BirthDate = birthDate;
             Weight = weight;
-            Height = height;
+            Height = hight;
         }
         public override string ToString()
         {
