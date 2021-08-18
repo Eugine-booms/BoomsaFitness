@@ -15,17 +15,9 @@ namespace BoomsaFitnessCMD
             Console.WriteLine("Вас приветствует приложение BoomsaFitness");
             Console.WriteLine("Введите имя пользователя");
             var name = Console.ReadLine();
-            Console.WriteLine("Введите пол");
-            var gender = Console.ReadLine();
-            Console.WriteLine("Введите дату рождения");
-            var birthdate = DateTime.Parse(Console.ReadLine()); //TODO Переписать;
-            Console.WriteLine("Введите вес");
-            var weght = double.Parse(Console.ReadLine());
-            Console.WriteLine("Введите рост");
-            var hight = double.Parse(Console.ReadLine());
-            var userController = new UserController(name, gender, birthdate, weght, hight);
-            userController.Save();
-            var userLoad= new UserController().User;
+            var userController = new UserController(name);
+            Console.WriteLine(userController.CurentUser);
+          
             Console.ReadKey();
         }
     }

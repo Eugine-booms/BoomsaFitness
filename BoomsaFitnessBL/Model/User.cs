@@ -16,11 +16,11 @@ namespace BoomsaFitnessBL.Model
         /// <summary>
         /// Пол
         /// </summary>
-        public Gender Gender { get; }
+        public Gender Gender { get; set; }
         /// <summary>
         /// Дата рождений 
         /// </summary>
-        public DateTime BirthDate { get; }
+        public DateTime BirthDate { get; set; }
         /// <summary>
         /// Вес
         /// </summary>
@@ -29,6 +29,18 @@ namespace BoomsaFitnessBL.Model
         /// Рост
         /// </summary>
         public double Height { get; set; }
+        public int Age
+        {
+            get
+            {
+                int age = DateTime.Today.Year - BirthDate.Year;
+                if (BirthDate > DateTime.Today.AddYears(-age))
+                {
+                    age--;
+                }
+                return age;
+            }
+        }
         /// <summary>
         /// Создание нового пользователы
         /// </summary>
@@ -72,9 +84,17 @@ namespace BoomsaFitnessBL.Model
             Weight = weight;
             Height = hight;
         }
+        public User(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentNullException("Имя пользователя не может быть пустым", nameof(name));
+            }
+            Name = name;
+        }
         public override string ToString()
         {
-            return Name; 
+            return Name+" "+Age; 
         }
     }
 }
