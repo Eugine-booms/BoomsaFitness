@@ -12,7 +12,7 @@ namespace BoomsaFitnessCMD
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Вас приветствует приложение BoomsaFitness");
+            Console.WriteLine("Вас приветствует приложение BoomsaFitness.");
             Console.WriteLine("Введите имя пользователя");
             var name = Console.ReadLine();
             var userController = new UserController(name);
@@ -35,9 +35,37 @@ namespace BoomsaFitnessCMD
                     userController.CreateNewUser (gender, birthDate, weght, hight);
                 }
             }
-                Console.WriteLine(userController.CurentUser);
-          
+            Console.WriteLine(userController.CurentUser);
+            var eatingController = new EatingController(userController.CurentUser);
+            Console.WriteLine("Что вы хотите сделать?");
+            Console.WriteLine("E - ввести прием пищи");
+            var key = Console.ReadKey();
+            if (key.Key==ConsoleKey.E)
+            {
+                var eating= EnterEating();
+                eatingController.Add(eating.Food, eating.weight);
+
+                foreach (var item in eatingController.Eating.Foods)
+                {
+                    Console.WriteLine($"\t{item.Key}-{item.Value}");
+                }
+                
+            }
             Console.ReadKey();
+        }
+
+        private static (Food Food, double weight) EnterEating()
+        {
+            Console.Write("Введите имя продукта: ");
+            var food= Console.ReadLine();
+            var calories = ParseDouble("калорийность");
+            var fats = ParseDouble("жиры");
+            var proteins = ParseDouble("Белки");
+            var carbohydrates = ParseDouble("Углеводы");
+            Console.Write("Введите вес порции: ");
+            var weight = ParseDouble("Вес порции: ");
+            var eating = new Food(food, fats, proteins, carbohydrates, calories);
+            return (Food: eating, weight: weight);
         }
         private static DateTime ParseDateTime()
         {

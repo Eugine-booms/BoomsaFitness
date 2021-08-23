@@ -12,8 +12,9 @@ namespace BoomsaFitnessBL.Controller
     /// <summary>
     /// Контроллер пользователя
     /// </summary>
-    public class UserController
+    public class UserController:ControllerBase
     {
+        private const string USER_FILE_NAME = "users.dat";
         public User CurentUser { get; private set; }
         public List <User> Users { get; }
         /// <summary>
@@ -43,62 +44,21 @@ namespace BoomsaFitnessBL.Controller
             CurentUser.Weight = weight;
             CurentUser.Height = height;
             Save();
-
-            //string str;
-            //do
-            //{
-            //    Console.WriteLine("Пользователь не найден. Создать нового? д/н");
-            //    str = Console.ReadLine();
-            //} while (!"ДднН".Contains(str));
-            //if ("Дд".Contains(str))
-            //{
-            //    Console.WriteLine("Введите пол");
-            //    var gender = Console.ReadLine();
-            //    DateTime birthDate =ParseDateTime();
-            //    var weght = ParseDouble("Вес");
-            //    var hight = ParseDouble("Рост");
-            //    CurentUser= new User(userName, new Gender(gender), birthDate, weght, hight);
-            //    this.Users.Add(CurentUser);
-            //    Save();
-            //    if (CurentUser == null)
-            //    {
-            //        throw new ArgumentNullException("Не создан пользователь", nameof(CurentUser));
-            //    }
-            //}
-            //else return null;
-            //return CurentUser;
         }
-      
         /// <summary>
         /// Получить сохраненный список пользоваетлей
         /// </summary>
         /// <returns>сохраненный список пользоваетлей</returns>
         private List <User> GetUsersData ()
         {
-            var formater = new BinaryFormatter();
-            using (var fs = new FileStream("users.dat", FileMode.OpenOrCreate))
-            {
-                if (fs.Length >0 &&formater.Deserialize(fs) is List<User>  users)
-                {
-                    return users;
-                }
-                else
-                {
-                    return new List<User>();
-                }
-            }
-           
+          return  base.Load<List<User>>(USER_FILE_NAME) ?? new List<User>();
         }
         /// <summary>
         /// Сохранить данные пользователя
         /// </summary>
         public void Save()
         {
-            var formater = new BinaryFormatter();
-            using (var fs = new FileStream("users.dat", FileMode.OpenOrCreate))
-            {
-                formater.Serialize(fs, Users);
-            }
+            base.Save(USER_FILE_NAME, Users);
             //TODO Добавить событие и оповещать о том что "Был сохранен"
         }
     }
