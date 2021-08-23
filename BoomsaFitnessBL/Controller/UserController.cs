@@ -14,7 +14,7 @@ namespace BoomsaFitnessBL.Controller
     /// </summary>
     public class UserController
     {
-        public User CurentUser { get; }
+        public User CurentUser { get; private set; }
         public List <User> Users { get; }
         /// <summary>
         /// Создание нового контроллера пользователя
@@ -28,66 +28,47 @@ namespace BoomsaFitnessBL.Controller
             }
             Users = GetUsersData();
             CurentUser = Users.SingleOrDefault(u => u.Name == userName);
-            if (CurentUser == null)
+            if (CurentUser==null)
             {
-                CurentUser = CreateNewUser(userName);
+                CurentUser = new User(userName);
                 Users.Add(CurentUser);
                 Save();
-                if (CurentUser == null)
-                {
-                    throw new ArgumentNullException("Не создан пользователь", nameof(CurentUser));
-                }
             }
         }
-        private User CreateNewUser(string userName)
+        public void CreateNewUser(string genderName, DateTime birthDate, double weight = 1, double height=1)
         {
-            string str;
-            do
-            {
-                Console.WriteLine("Пользователь не найден. Создать нового? д/н");
-                str = Console.ReadLine();
-            } while (!"ДднН".Contains(str));
-            if ("Дд".Contains(str))
-            {
-                Console.WriteLine("Введите пол");
-                var gender = Console.ReadLine();
-                DateTime birthDate =ParseDateTime();
-                var weght = ParseDouble("Вес");
-                var hight = ParseDouble("Рост");
-                return new User(userName, new Gender(gender), birthDate, weght, hight);
-            }
-            else return null;
+            //TODO Проверка
+            CurentUser.Gender = new Gender(genderName);
+            CurentUser.BirthDate = birthDate;
+            CurentUser.Weight = weight;
+            CurentUser.Height = height;
+            Save();
+
+            //string str;
+            //do
+            //{
+            //    Console.WriteLine("Пользователь не найден. Создать нового? д/н");
+            //    str = Console.ReadLine();
+            //} while (!"ДднН".Contains(str));
+            //if ("Дд".Contains(str))
+            //{
+            //    Console.WriteLine("Введите пол");
+            //    var gender = Console.ReadLine();
+            //    DateTime birthDate =ParseDateTime();
+            //    var weght = ParseDouble("Вес");
+            //    var hight = ParseDouble("Рост");
+            //    CurentUser= new User(userName, new Gender(gender), birthDate, weght, hight);
+            //    this.Users.Add(CurentUser);
+            //    Save();
+            //    if (CurentUser == null)
+            //    {
+            //        throw new ArgumentNullException("Не создан пользователь", nameof(CurentUser));
+            //    }
+            //}
+            //else return null;
+            //return CurentUser;
         }
-        private static DateTime ParseDateTime()
-        {
-            while (true)
-            {
-                Console.WriteLine("Введите дату рождения (dd.MM.YYYY)");
-                if (DateTime.TryParse(Console.ReadLine(), out DateTime birthDate))
-                {
-                    return birthDate;
-                }
-                else
-                {
-                    Console.WriteLine("Неверный формат даты");
-                }
-            }
-        }
-        private static double ParseDouble(string name)
-        {
-            while (true)
-            {
-                Console.WriteLine($"Введите {name}");
-                if (double.TryParse(Console.ReadLine(), out double value))
-                {
-                    return value;
-                } 
-                else
-                {
-                    Console.WriteLine($"Неверный формат {name}: ");
-                }
-            }
-        }
+      
         /// <summary>
         /// Получить сохраненный список пользоваетлей
         /// </summary>
@@ -97,7 +78,7 @@ namespace BoomsaFitnessBL.Controller
             var formater = new BinaryFormatter();
             using (var fs = new FileStream("users.dat", FileMode.OpenOrCreate))
             {
-                if (formater.Deserialize(fs) is List<User>  users)
+                if (fs.Length >0 &&formater.Deserialize(fs) is List<User>  users)
                 {
                     return users;
                 }
