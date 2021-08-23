@@ -51,19 +51,42 @@ namespace BoomsaFitnessBL.Controller
             {
                 Console.WriteLine("Введите пол");
                 var gender = Console.ReadLine();
-                Console.WriteLine("Введите дату рождения (dd.MM.YYYY)");
-                if (!DateTime.TryParse(Console.ReadLine(), out DateTime birthDate))
-                {
-                    throw new InvalidDataException("Неправильно введена дата");
-                }
-                Console.WriteLine("Введите вес");
-                var weght = double.Parse(Console.ReadLine());
-                Console.WriteLine("Введите рост");
-                var hight = double.Parse(Console.ReadLine());
+                DateTime birthDate =ParseDateTime();
+                var weght = ParseDouble("Вес");
+                var hight = ParseDouble("Рост");
                 return new User(userName, new Gender(gender), birthDate, weght, hight);
-
             }
             else return null;
+        }
+        private static DateTime ParseDateTime()
+        {
+            while (true)
+            {
+                Console.WriteLine("Введите дату рождения (dd.MM.YYYY)");
+                if (DateTime.TryParse(Console.ReadLine(), out DateTime birthDate))
+                {
+                    return birthDate;
+                }
+                else
+                {
+                    Console.WriteLine("Неверный формат даты");
+                }
+            }
+        }
+        private static double ParseDouble(string name)
+        {
+            while (true)
+            {
+                Console.WriteLine($"Введите {name}");
+                if (double.TryParse(Console.ReadLine(), out double value))
+                {
+                    return value;
+                } 
+                else
+                {
+                    Console.WriteLine($"Неверный формат {name}: ");
+                }
+            }
         }
         /// <summary>
         /// Получить сохраненный список пользоваетлей
@@ -85,7 +108,6 @@ namespace BoomsaFitnessBL.Controller
             }
            
         }
-
         /// <summary>
         /// Сохранить данные пользователя
         /// </summary>
