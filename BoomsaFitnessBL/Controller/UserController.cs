@@ -16,7 +16,7 @@ namespace BoomsaFitnessBL.Controller
     {
         private const string USER_FILE_NAME = "users.dat";
         public User CurentUser { get; private set; }
-        public List <User> Users { get; }
+        public List <User> Users { get; private set; }
         /// <summary>
         /// Создание нового контроллера пользователя
         /// </summary>
@@ -61,5 +61,14 @@ namespace BoomsaFitnessBL.Controller
             base.Save(USER_FILE_NAME, Users);
             //TODO Добавить событие и оповещать о том что "Был сохранен"
         }
+        public bool DeleteCurentUser()
+        {
+            var usersCount = Users.Count;
+            var sucsesfull= Users.Remove(CurentUser);
+            CurentUser = null;
+            Save();
+            return (usersCount - 1) == Users.Count ? true : false;
+        }
+
     }
 }

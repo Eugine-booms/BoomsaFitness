@@ -10,6 +10,7 @@ namespace BoomsaFitnessBL.Controller
 {
    public abstract class ControllerBase
     {
+       
         protected void Save(string filename, object item)
         {
             var formater = new BinaryFormatter();
