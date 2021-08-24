@@ -9,7 +9,7 @@ namespace BoomsaFitnessBL.Controller
     {
         private const string FOODS_FILE_NAME= "foods.dat";
         private const string EATINGS_FILE_NAME = "eatings.dat";
-        private User user;
+        private readonly User user;
         public List<Food> Foods { get; }
         public Eating Eating { get; }
         public EatingController(User user)

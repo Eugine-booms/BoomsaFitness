@@ -2,7 +2,9 @@
 using BoomsaFitnessBL.Model;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,13 +14,15 @@ namespace BoomsaFitnessCMD
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Вас приветствует приложение BoomsaFitness.");
-            Console.WriteLine("Введите имя пользователя");
+
+            var culture = CultureInfo.CurrentCulture;
+            var resourseManager = new ResourceManager("BoomsaFitnessCMD.Languages.Messages", typeof(Program).Assembly);
+            Console.WriteLine(resourseManager.GetString("Hello",culture));
+            Console.WriteLine(resourseManager.GetString("EnterName",culture));
             var name = Console.ReadLine();
             var userController = new UserController(name);
             if (userController.CurentUser == null)
             {
-
                 string str;
                 do
                 {
@@ -29,7 +33,7 @@ namespace BoomsaFitnessCMD
                 {
                     Console.WriteLine("Введите пол");
                     var gender = Console.ReadLine();
-                    DateTime birthDate = ParseDateTime();
+                    DateTime birthDate = ParseDateTime("дату рождения(dd.MM.YYYY)");
                     var weght = ParseDouble("Вес");
                     var hight = ParseDouble("Рост");
                     userController.CreateNewUser (gender, birthDate, weght, hight);
@@ -37,21 +41,65 @@ namespace BoomsaFitnessCMD
             }
             Console.WriteLine(userController.CurentUser);
             var eatingController = new EatingController(userController.CurentUser);
-            Console.WriteLine("Что вы хотите сделать?");
-            Console.WriteLine("E - ввести прием пищи");
-            var key = Console.ReadKey();
-            if (key.Key==ConsoleKey.E)
+            var exiexerciseController = new ExerciseController(userController.CurentUser);
+            while (true)
             {
-                var eating= EnterEating();
-                eatingController.Add(eating.Food, eating.weight);
 
-                foreach (var item in eatingController.Eating.Foods)
+
+                Console.WriteLine("Что вы хотите сделать?");
+                Console.WriteLine("E - ввести прием пищи");
+                Console.WriteLine("A - ввести упражнение");
+                Console.WriteLine("U - Вывести всех пользователей");
+                Console.WriteLine("Q - выход");
+                var key = Console.ReadKey();
+                switch (key.Key)
                 {
-                    Console.WriteLine($"\t{item.Key}-{item.Value}");
+                    case ConsoleKey.Q:
+                        Environment.Exit(0);
+                        break;
+                    case ConsoleKey.E:
+                        var eating = EnterEating();
+                        eatingController.Add(eating.Food, eating.weight);
+
+                        foreach (var item in eatingController.Eating.Foods)
+                        {
+                            Console.WriteLine($"\t{item.Key}-{item.Value}");
+                        }
+                        break;
+                    case ConsoleKey.U:
+                        foreach (var item in userController.Users)
+                        {
+                            Console.WriteLine($"\t{item}");
+                        }
+                        break;
+                    case ConsoleKey.A:
+                        var exercise = EnterExercise(userController.CurentUser);
+                        exiexerciseController.Add(exercise);
+                        Console.Clear();
+                        Console.WriteLine(userController.CurentUser);
+                        Console.WriteLine("Активности");
+                        foreach (var item in exiexerciseController.Exercises)
+                        {
+                            Console.WriteLine($"\t{item}");
+                        }
+                        break;
                 }
-                
+
             }
             Console.ReadKey();
+        }
+
+        private static Exercise EnterExercise(User user)
+        {
+            Console.WriteLine("Введите название упражнения: ");
+            var exerciseName = Console.ReadLine();
+            var exerciseStart = ParseDateTime("Время начала упражнения ");
+            var exerciseFinish = ParseDateTime("Время окончания упражнения ");
+            var energy = ParseDouble("Расход энергии");
+            return new Exercise(exerciseStart, exerciseFinish, user, new Activity(exerciseName, energy));
+
+
+
         }
 
         private static (Food Food, double weight) EnterEating()
@@ -67,14 +115,14 @@ namespace BoomsaFitnessCMD
             var eating = new Food(food, fats, proteins, carbohydrates, calories);
             return (Food: eating, weight: weight);
         }
-        private static DateTime ParseDateTime()
+        private static DateTime ParseDateTime(string param)
         {
             while (true)
             {
-                Console.WriteLine("Введите дату рождения (dd.MM.YYYY)");
-                if (DateTime.TryParse(Console.ReadLine(), out DateTime birthDate))
+                Console.WriteLine($"Введите {param}");
+                if (DateTime.TryParse(Console.ReadLine(), out DateTime dateTime))
                 {
-                    return birthDate;
+                    return dateTime;
                 }
                 else
                 {

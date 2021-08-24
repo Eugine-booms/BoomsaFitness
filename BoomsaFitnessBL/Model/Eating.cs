@@ -12,13 +12,13 @@ namespace BoomsaFitnessBL.Model
     [Serializable]
    public  class Eating
     {
-        public DateTime Moment { get;  }
+        public DateTime Moment { get;}
         public Dictionary<Food, double> Foods { get;}
-        public User User { get;  }
+        public User User { get;}
 
         public Eating (User user)
         {
-            User = user ?? throw new ArgumentNullException("User не может быть Null", nameof(user));
+            User = user ?? throw new ArgumentNullException("Пользователь не может быть null", nameof(user));
             Moment = DateTime.UtcNow;
             Foods = new Dictionary<Food, double>();
         }
