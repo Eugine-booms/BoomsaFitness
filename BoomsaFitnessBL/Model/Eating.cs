@@ -18,7 +18,7 @@ namespace BoomsaFitnessBL.Model
 
         public Eating (User user)
         {
-            User = user ?? throw new ArgumentNullException("Пользователь не может быть null", nameof(user));
+            User = user ?? throw new ArgumentNullException(nameof(user), "Пользователь не может быть null" );
             Moment = DateTime.UtcNow;
             Foods = new Dictionary<Food, double>();
         }

@@ -15,14 +15,16 @@ namespace BoomsaFitnessCMD
         static void Main(string[] args)
         {
 
+
             var  culture = CultureInfo.CurrentCulture;
             var resourseManager = new ResourceManager("BoomsaFitnessCMD.Languages.Messages", typeof(Program).Assembly);
             Console.WriteLine(resourseManager.GetString("Hello", culture));
-            
             UserController userController = ChangeUser();
             Console.WriteLine(userController.CurentUser);
             var eatingController = new EatingController(userController.CurentUser);
             var exiexerciseController = new ExerciseController(userController.CurentUser);
+            
+
             while (true)
             {
                 if (userController.CurentUser==null)
@@ -44,9 +46,13 @@ namespace BoomsaFitnessCMD
                 switch (key.Key)
                 {
                     case ConsoleKey.D:
+                        Console.Clear();
                         userController.DeleteCurentUser();
+                        userController.PrintAllUsers();
                         break;
                     case ConsoleKey.C:
+                        Console.Clear();
+                        userController.PrintAllUsers();
                         userController = ChangeUser();
                         break;
                     case ConsoleKey.O:
@@ -56,6 +62,7 @@ namespace BoomsaFitnessCMD
                         Environment.Exit(0);
                         break;
                     case ConsoleKey.E:
+                        Console.Clear();
                         var eating = EnterEating();
                         eatingController.Add(eating.Food, eating.weight);
 
@@ -65,10 +72,8 @@ namespace BoomsaFitnessCMD
                         }
                         break;
                     case ConsoleKey.U:
-                        foreach (var item in userController.Users)
-                        {
-                            Console.WriteLine($"\t{item}");
-                        }
+                        Console.Clear();
+                        userController.PrintAllUsers();
                         break;
                     case ConsoleKey.A:
                         var exercise = EnterExercise(userController.CurentUser);
@@ -84,15 +89,15 @@ namespace BoomsaFitnessCMD
                 }
 
             }
+
             Console.ReadKey();
         }
-
         private static UserController ChangeUser()
         {
             Console.WriteLine("Введите имя пользователя");
             var name = Console.ReadLine();
             var userController = new UserController(name);
-            if (userController.CurentUser == null)
+            if (userController.IsNewUser)
             {
                 string str;
                 do

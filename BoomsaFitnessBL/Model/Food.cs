@@ -24,15 +24,16 @@ namespace BoomsaFitnessBL.Model
             #region Проверки
             if (string.IsNullOrWhiteSpace(name))
             {
-                throw new ArgumentNullException("Название продукта не может быть пустым", nameof(name));
+                throw new ArgumentNullException(nameof(name),"Название продукта не может быть пустым");
             }
             if (fats<=0)
             {
-                throw new ArgumentNullException("Количество жиров не может быть меньше или равно нулю", nameof(fats));
+                throw new ArgumentNullException( nameof(fats), "Количество жиров не может быть меньше или равно нулю");
             }
             if (proteins <= 0)
             {
                 throw new ArgumentNullException("Количество белков не может быть меньше или равно нулю", nameof(fats));
+               
             }
             if (carbohydrates <= 0)
             {

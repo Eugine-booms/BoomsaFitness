@@ -14,7 +14,9 @@ namespace BoomsaFitnessBL.Controller
         public Eating Eating { get; }
         public EatingController(User user)
         {
-            this.user = user ?? throw new ArgumentNullException("Пользователь не может быть пустым", nameof(user));
+            this.LoadFile += LoadingFile;
+            this.SaveFile += SavingFile;
+            this.user = user ?? throw new ArgumentNullException(nameof(user), "Пользователь не может быть пустым");
             Foods = GetAllFoods();
             Eating = GetEating();
         }
@@ -46,6 +48,7 @@ namespace BoomsaFitnessBL.Controller
         {
             Save(FOODS_FILE_NAME, Foods);
             Save(EATINGS_FILE_NAME, Eating);
+
         }
     }
 }

@@ -14,6 +14,7 @@ namespace BoomsaFitnessBL.Controller
     /// </summary>
     public class UserController:ControllerBase
     {
+        public bool IsNewUser { get; } = false;
         private const string USER_FILE_NAME = "users.dat";
         public User CurentUser { get; private set; }
         public List <User> Users { get; private set; }
@@ -27,15 +28,20 @@ namespace BoomsaFitnessBL.Controller
             {
                 throw new ArgumentNullException("Имя пользователя не может быть пустым", nameof(userName));
             }
+            this.LoadFile += base.LoadingFile;
+            this.SaveFile += base.SavingFile; ;
             Users = GetUsersData();
             CurentUser = Users.SingleOrDefault(u => u.Name == userName);
             if (CurentUser==null)
             {
+                IsNewUser = true;
                 CurentUser = new User(userName);
                 Users.Add(CurentUser);
                 Save();
             }
         }
+
+        
         public void CreateNewUser(string genderName, DateTime birthDate, double weight = 1, double height=1)
         {
             //TODO Проверка
@@ -70,5 +76,13 @@ namespace BoomsaFitnessBL.Controller
             return (usersCount - 1) == Users.Count ? true : false;
         }
 
+        public void PrintAllUsers()
+        {
+            var users = GetUsersData();
+            foreach (var item in users)
+            {
+                Console.WriteLine($"\t{item}");
+            }
+        }
     }
 }

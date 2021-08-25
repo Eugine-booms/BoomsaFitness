@@ -15,6 +15,8 @@ namespace BoomsaFitnessBL.Controller
 
         public ExerciseController(User user)
         {
+            this.LoadFile += LoadingFile;
+            this.SaveFile+=SavingFile;
             this.user = user ?? throw new ArgumentNullException(nameof(user));
             Exercises = GetAllExercises();
             Activitys = GetActivity();
