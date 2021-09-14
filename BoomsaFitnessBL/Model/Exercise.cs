@@ -8,8 +8,9 @@ namespace BoomsaFitnessBL.Model
         public int Id { get; set; }
         public int UserId { get; set; }
         public virtual User User { get; set; }
-        public virtual Activity Activity { get; set; }
+        
         public int ActivityId { get; set; }
+        public virtual Activity Activity { get; set; }
 
         public DateTime Start { get; set; }
         public DateTime Finish { get; set; }
@@ -30,6 +31,11 @@ namespace BoomsaFitnessBL.Model
             User = user ?? throw new ArgumentNullException(nameof(user));
             Activity = activity;
         }
+
+        public Exercise()
+        {
+        }
+
         public override string ToString()
         {
             return $"{Activity} дата {Start.ToShortDateString()} начало {Start.ToShortTimeString()} - конец {Finish.ToShortTimeString()}";

@@ -43,9 +43,6 @@ namespace BoomsaFitnessBL.Controller.Tests
             Assert.AreEqual(height, controller2.CurentUser.Height);
             Assert.AreEqual(gender, controller2.CurentUser.Gender.Name);
             Assert.AreEqual(birthDate, controller2.CurentUser.BirthDate);
-
-
-
         }
 
         [TestMethod()]

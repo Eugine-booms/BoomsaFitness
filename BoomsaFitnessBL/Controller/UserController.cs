@@ -59,7 +59,7 @@ namespace BoomsaFitnessBL.Controller
         /// </summary>
         public void Save()
         {
-            base.Save(Users);
+            Save(Users);
         }
         public bool DeleteCurentUser()
         {

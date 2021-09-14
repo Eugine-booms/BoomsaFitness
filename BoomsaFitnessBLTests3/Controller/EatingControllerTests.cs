@@ -1,6 +1,7 @@
 ﻿using BoomsaFitnessBL.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BoomsaFitnessBL.Controller.Tests
@@ -11,18 +12,19 @@ namespace BoomsaFitnessBL.Controller.Tests
         [TestMethod()]
         public void AddTest()
         {
-            //Arrange
+            // Arrange
             var userName = Guid.NewGuid().ToString();
             var foodName = Guid.NewGuid().ToString();
             var rnd = new Random();
-            var usercontroller = new UserController(userName);
-            var eatingController = new EatingController(usercontroller.CurentUser);
-            var food = new Food(foodName, rnd.Next(50,500), rnd.Next(50, 500), rnd.Next(50, 500), rnd.Next(50, 500));
-            //Act
-            eatingController.Add(food, 100);
-            //Assert
-            Assert.AreEqual(eatingController.Foods.Count, new EatingController(new UserController(userName).CurentUser).Eating.Foods.Count);
-            Assert.AreEqual(food.Name, eatingController.Eating.Foods.Last().Key.Name);
+            var userController = new UserController(userName);
+            var eatingConroller = new EatingController(userController.CurentUser);
+            var food = new Food(foodName, rnd.Next(50, 500), rnd.Next(50, 500), rnd.Next(50, 500), rnd.Next(50, 500));
+
+            // Act
+            eatingConroller.Add(food, 100);
+
+            // Assert
+            Assert.AreEqual(food.Name, eatingConroller.Eating.Foods.First().Key.Name);
         }
     }
 }

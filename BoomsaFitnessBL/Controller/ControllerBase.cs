@@ -4,7 +4,7 @@ namespace BoomsaFitnessBL.Controller
 {
     public abstract class ControllerBase
     {
-        private readonly IDataSaver manager = new SerializeSever();
+        private readonly IDataSaver manager = new DatabaseDataSever();
         protected void Save<T>(List<T> item) where T:class
         {
             manager.Save(item);

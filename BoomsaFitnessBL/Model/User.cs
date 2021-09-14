@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BoomsaFitnessBL.Model
 {
@@ -31,6 +32,10 @@ namespace BoomsaFitnessBL.Model
         /// Рост
         /// </summary>
         public double Height { get; set; }
+
+        public virtual ICollection <Eating> Eatings { get; set; }
+        public virtual ICollection<Exercise> Exercises { get; set; }
+
         public int Age
         {
             get
@@ -94,6 +99,11 @@ namespace BoomsaFitnessBL.Model
             }
             Name = name;
         }
+
+        public User()
+        {
+        }
+
         public override string ToString()
         {
             return Name+" "+Age; 

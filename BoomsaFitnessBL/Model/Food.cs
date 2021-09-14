@@ -15,7 +15,8 @@ namespace BoomsaFitnessBL.Model
         public double Fats { get; set; }
         public double Carbohydrates { get; set; }
         public double Calories { get; set; }
-        
+        public virtual ICollection<Eating> Eatings { get; set; }
+
 
         public Food(string name) : this (name,1,1,1,1)
         {
@@ -51,6 +52,10 @@ namespace BoomsaFitnessBL.Model
             Proteins = proteins / 100.0;
             Carbohydrates = carbohydrates / 100.0;
             Calories = calories / 100.0;
+        }
+
+        public Food()
+        {
         }
 
         public override string ToString()

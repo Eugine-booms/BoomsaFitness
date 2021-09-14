@@ -63,11 +63,6 @@ namespace BoomsaFitnessCMD
                         Console.Clear();
                         var eating = EnterEating();
                         eatingController.Add(eating.Food, eating.weight);
-
-                        foreach (var item in eatingController.Eating.Foods)
-                        {
-                            Console.WriteLine($"\t{item.Key}-{item.Value}");
-                        }
                         break;
                     case ConsoleKey.U:
                         Console.Clear();
@@ -87,7 +82,6 @@ namespace BoomsaFitnessCMD
                 }
 
             }
-
             Console.ReadKey();
         }
         private static UserController ChangeUser()
