@@ -10,9 +10,13 @@ namespace BoomsaFitnessBL.Model
     public class Activity
     
     {
-        public string Name { get; }
-        public double CaloriesPerMinute { get;  }
-       
+        public int Id { get; set; }
+        public virtual ICollection<Exercise> Exercises { get; set; }
+        public Activity() { }
+
+        public string Name { get; set; }
+        public double CaloriesPerMinute { get; set; }
+        
         public Activity (string name, double caloriesPerMinute)
         {
             Name = name ?? throw new ArgumentNullException("Имя не может быть пустым" , nameof(name));

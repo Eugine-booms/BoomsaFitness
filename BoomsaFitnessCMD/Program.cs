@@ -23,8 +23,6 @@ namespace BoomsaFitnessCMD
             Console.WriteLine(userController.CurentUser);
             var eatingController = new EatingController(userController.CurentUser);
             var exiexerciseController = new ExerciseController(userController.CurentUser);
-            
-
             while (true)
             {
                 if (userController.CurentUser==null)

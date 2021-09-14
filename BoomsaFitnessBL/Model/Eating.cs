@@ -12,9 +12,12 @@ namespace BoomsaFitnessBL.Model
     [Serializable]
    public  class Eating
     {
+        public int Id { get; set; }
+        public Eating() { }
         public DateTime Moment { get;}
-        public Dictionary<Food, double> Foods { get;}
-        public User User { get;}
+        public Dictionary<Food, double> Foods { get; set; }
+        public virtual User User { get; set; }
+        public int UserId { get; set; }
 
         public Eating (User user)
         {
@@ -22,6 +25,8 @@ namespace BoomsaFitnessBL.Model
             Moment = DateTime.UtcNow;
             Foods = new Dictionary<Food, double>();
         }
+
+        
         public void Add(Food food, double weight)
         {
             var product= Foods.Keys.FirstOrDefault(f => f.Name.Equals(food.Name));

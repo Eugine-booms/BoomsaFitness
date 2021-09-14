@@ -15,7 +15,6 @@ namespace BoomsaFitnessBL.Controller
     public class UserController:ControllerBase
     {
         public bool IsNewUser { get; } = false;
-        private const string USER_FILE_NAME = "users.dat";
         public User CurentUser { get; private set; }
         public List <User> Users { get; private set; }
         /// <summary>
@@ -28,8 +27,6 @@ namespace BoomsaFitnessBL.Controller
             {
                 throw new ArgumentNullException("Имя пользователя не может быть пустым", nameof(userName));
             }
-            this.LoadFile += base.LoadingFile;
-            this.SaveFile += base.SavingFile; ;
             Users = GetUsersData();
             CurentUser = Users.SingleOrDefault(u => u.Name == userName);
             if (CurentUser==null)
@@ -40,8 +37,6 @@ namespace BoomsaFitnessBL.Controller
                 Save();
             }
         }
-
-        
         public void CreateNewUser(string genderName, DateTime birthDate, double weight = 1, double height=1)
         {
             //TODO Проверка
@@ -57,15 +52,14 @@ namespace BoomsaFitnessBL.Controller
         /// <returns>сохраненный список пользоваетлей</returns>
         private List <User> GetUsersData ()
         {
-          return  base.Load<List<User>>(USER_FILE_NAME) ?? new List<User>();
+            return Load<User>();
         }
         /// <summary>
         /// Сохранить данные пользователя
         /// </summary>
         public void Save()
         {
-            base.Save(USER_FILE_NAME, Users);
-            //TODO Добавить событие и оповещать о том что "Был сохранен"
+            base.Save(Users);
         }
         public bool DeleteCurentUser()
         {
@@ -75,7 +69,6 @@ namespace BoomsaFitnessBL.Controller
             Save();
             return (usersCount - 1) == Users.Count ? true : false;
         }
-
         public void PrintAllUsers()
         {
             var users = GetUsersData();

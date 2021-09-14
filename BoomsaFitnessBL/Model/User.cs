@@ -9,10 +9,12 @@ namespace BoomsaFitnessBL.Model
     public class User
     {
         #region Свойства
+        public int Id { get; set; }
         /// <summary>
         /// Имя
         /// </summary>
-        public string Name { get; }
+        public string Name { get; set; }
+
         /// <summary>
         /// Пол
         /// </summary>

@@ -6,7 +6,8 @@ namespace BoomsaFitnessBL.Model
     [Serializable]
     public class Gender
     {
-        public string Name { get; }
+        public int Id { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// Создание нового гендера
         /// </summary>
