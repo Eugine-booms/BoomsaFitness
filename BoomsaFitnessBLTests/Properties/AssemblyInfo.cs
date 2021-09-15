@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Управление общими сведениями о сборке осуществляется с помощью указанного ниже 
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // общие сведения об этой сборке.
-[assembly: AssemblyTitle("BoomsaFitnessBLTests3")]
+[assembly: AssemblyTitle("BoomsaFitnessBLTests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("BoomsaFitnessBLTests3")]
+[assembly: AssemblyProduct("BoomsaFitnessBLTests")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("6ffa6fe9-f3bb-4bd6-8ab8-0ed29b14f4dd")]
+[assembly: Guid("9e4b31a1-7c94-4346-a4dc-3f0118d451d0")]
 
 // Сведения о версии сборки состоят из следующих четырех значений:
 //

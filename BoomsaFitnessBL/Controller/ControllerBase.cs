@@ -11,7 +11,7 @@ namespace BoomsaFitnessBL.Controller
         }
         protected List<T> Load <T>() where T:class
         {
-            return manager.Load<T>();
+            return manager.Load<T>()?? new List<T>();
         }
     }
 }

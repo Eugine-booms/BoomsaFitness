@@ -9,8 +9,7 @@
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
-            ContextKey = "BoomsaFitnessBL.Controller.DbFitnessContext";
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(BoomsaFitnessBL.Controller.DbFitnessContext context)

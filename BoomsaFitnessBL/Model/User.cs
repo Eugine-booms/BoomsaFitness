@@ -4,109 +4,114 @@ using System.Collections.Generic;
 namespace BoomsaFitnessBL.Model
 {
     /// <summary>
-    /// Пользователь
+    /// Пользователь.
     /// </summary>
     [Serializable]
     public class User
     {
         #region Свойства
         public int Id { get; set; }
+
         /// <summary>
-        /// Имя
+        /// Имя.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Пол
+        /// Пол.
         /// </summary>
+
+        public int GenderId { get; set; }
         public Gender Gender { get; set; }
+
         /// <summary>
-        /// Дата рождений 
+        /// Дата рождения.
         /// </summary>
-        public DateTime BirthDate { get; set; }
+        public DateTime BirthDate { get; set; } = DateTime.Now;
+
         /// <summary>
-        /// Вес
+        /// Вес.
         /// </summary>
         public double Weight { get; set; }
+
         /// <summary>
-        /// Рост
+        /// Рост.
         /// </summary>
         public double Height { get; set; }
 
-        public virtual ICollection <Eating> Eatings { get; set; }
+        //DateTime nowDate = DateTime.Today;
+        //int age = nowDate.Year - birthDate.Year;
+        //if (birthDate > nowDate.AddYears(-age)) age--;
+
+        public virtual ICollection<Eating> Eatings { get; set; }
         public virtual ICollection<Exercise> Exercises { get; set; }
 
-        public int Age
-        {
-            get
-            {
-                int age = DateTime.Today.Year - BirthDate.Year;
-                if (BirthDate > DateTime.Today.AddYears(-age))
-                {
-                    age--;
-                }
-                return age;
-            }
-        }
-        /// <summary>
-        /// Создание нового пользователы
-        /// </summary>
-        /// <param name="name"> Имя пользователя</param>
-        /// <param name="gender"> Пол </param>
-        /// <param name="birthDate"> Дата рождения</param>
-        /// <param name="weight"> Вес </param>
-        /// <param name="height"> Рост </param>
+        public int Age { get { return DateTime.Now.Year - BirthDate.Year; } }
         #endregion
+
+        /// <summary>
+        /// Создать нового пользователя.
+        /// </summary>
+        /// <param name="name"> Имя. </param>
+        /// <param name="gender"> Пол. </param>
+        /// <param name="birthDate"> Дата рождения. </param>
+        /// <param name="weight"> Вес. </param>
+        /// <param name="height"> Рост. </param>
         public User(string name,
                     Gender gender,
                     DateTime birthDate,
                     double weight,
-                    double hight)
+                    double height)
         {
             #region Проверка условий
             if (string.IsNullOrWhiteSpace(name))
             {
-                throw new ArgumentNullException("Имя пользователя не может быть пустым", nameof(name));
+                throw new ArgumentNullException("Имя пользователя не может быть пустым или null", nameof(name));
             }
+
             if (gender == null)
             {
-                throw new ArgumentNullException("Гендер не может быть Null", nameof(gender));
+                throw new ArgumentNullException("Пол не может быть null.", nameof(gender));
             }
-            if (birthDate < DateTime.Parse("01.01.1900") || birthDate > DateTime.Now)
+
+            if (birthDate < DateTime.Parse("01.01.1900") || birthDate >= DateTime.Now)
             {
-                throw new ArgumentException("Дата рождения не может быть выходить за пределы 1900<дата<now", nameof(birthDate));
+                throw new ArgumentException("Невозможная дата рождения.", nameof(birthDate));
             }
+
             if (weight <= 0)
             {
-                throw new ArgumentException("Вес не может быть <=0", nameof(weight));
+                throw new ArgumentException("Вес не может быть меньше либо равен нулю.", nameof(weight));
             }
-            if (hight <= 0)
+
+            if (height <= 0)
             {
-                throw new ArgumentException("Вес не может быть меньше 0", nameof(hight));
+                throw new ArgumentException("Рост не может быть меньше либо равен нулю.", nameof(height));
             }
             #endregion
+
             Name = name;
             Gender = gender;
             BirthDate = birthDate;
             Weight = weight;
-            Height = hight;
+            Height = height;
         }
+
+        public User() { }
+
         public User(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                throw new ArgumentNullException("Имя пользователя не может быть пустым", nameof(name));
+                throw new ArgumentNullException("Имя пользователя не может быть пустым или null", nameof(name));
             }
-            Name = name;
-        }
 
-        public User()
-        {
+            Name = name;
         }
 
         public override string ToString()
         {
-            return Name+" "+Age; 
+            return Name + " " + Age;
         }
     }
 }

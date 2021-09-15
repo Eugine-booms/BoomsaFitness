@@ -7,13 +7,13 @@ namespace BoomsaFitnessBL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class start : IMigrationMetadata
+    public sealed partial class Eating : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(start));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Eating));
         
         string IMigrationMetadata.Id
         {
-            get { return "202109141541111_start"; }
+            get { return "202109150952543_Eating"; }
         }
         
         string IMigrationMetadata.Source

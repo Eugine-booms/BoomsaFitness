@@ -10,13 +10,13 @@ namespace BoomsaFitnessBL.Model
     public class Food
     {
         public int Id { get; set; }
+        public virtual ICollection<Eating> Eatings { get; set; }
         public string Name { get; set; }
         public double Proteins { get; set; }
         public double Fats { get; set; }
         public double Carbohydrates { get; set; }
         public double Calories { get; set; }
-        public virtual ICollection<Eating> Eatings { get; set; }
-
+       
 
         public Food(string name) : this (name,1,1,1,1)
         {

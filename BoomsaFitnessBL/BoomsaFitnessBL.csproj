@@ -59,13 +59,13 @@
     <Compile Include="Controller\IDataSaver.cs" />
     <Compile Include="Controller\SerializeSever.cs" />
     <Compile Include="Controller\UserController.cs" />
-    <Compile Include="Migrations\202109141539007_InitialCreate.cs" />
-    <Compile Include="Migrations\202109141539007_InitialCreate.designer.cs">
-      <DependentUpon>202109141539007_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\202109150952543_Eating.cs" />
+    <Compile Include="Migrations\202109150952543_Eating.designer.cs">
+      <DependentUpon>202109150952543_Eating.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202109141541111_start.cs" />
-    <Compile Include="Migrations\202109141541111_start.designer.cs">
-      <DependentUpon>202109141541111_start.cs</DependentUpon>
+    <Compile Include="Migrations\202109151024261_Eating1.cs" />
+    <Compile Include="Migrations\202109151024261_Eating1.designer.cs">
+      <DependentUpon>202109151024261_Eating1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Activity.cs" />
@@ -81,11 +81,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202109141539007_InitialCreate.resx">
-      <DependentUpon>202109141539007_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202109150952543_Eating.resx">
+      <DependentUpon>202109150952543_Eating.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202109141541111_start.resx">
-      <DependentUpon>202109141541111_start.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202109151024261_Eating1.resx">
+      <DependentUpon>202109151024261_Eating1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

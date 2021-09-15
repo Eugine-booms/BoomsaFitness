@@ -1,20 +1,17 @@
 ﻿using BoomsaFitnessBL.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BoomsaFitnessBL.Controller
 {
     class DatabaseDataSever : IDataSaver
-       
-{
+
+    {
         public List<T> Load<T>() where T : class
         {
             using (var db = new DbFitnessContext())
             {
-                var result = db.Set<T>().Where(l => true).ToList();
+                var result = db.Set<T>().Where(o => true).ToList();
                 return result;
             }
         }
@@ -22,14 +19,19 @@ namespace BoomsaFitnessBL.Controller
         {
             using (var db = new DbFitnessContext())
             {
-                db.Set<T>().AddRange(item);
-                db.SaveChangesAsync();
+                foreach (var item1 in item)
+                {
+                    db.Set<T>().Add(item1);
+                    db.SaveChanges();
+                }
+           //     db.Set<T>().AddRange(item);
+                db.SaveChanges();
             }
         }
     }
 
-   
 
-       
-    
+
+
+
 }

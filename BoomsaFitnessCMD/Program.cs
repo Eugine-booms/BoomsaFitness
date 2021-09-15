@@ -16,30 +16,23 @@ namespace BoomsaFitnessCMD
         {
 
 
-            var  culture = CultureInfo.CurrentCulture;
+            var culture = CultureInfo.CurrentCulture;
             var resourseManager = new ResourceManager("BoomsaFitnessCMD.Languages.Messages", typeof(Program).Assembly);
             Console.WriteLine(resourseManager.GetString("Hello", culture));
-            UserController userController = ChangeUser();
+            UserController userController = new UserController();
+            Console.Write("Введите имя пользователя =");
+            var userName = Console.ReadLine();
+            userController.ChangeCurentUser(userName);
+            if (userController.CurentUser==null)
+            {
+               userController.SetCurentUser(CreateNewUserDialog(userName));
+            }
             Console.WriteLine(userController.CurentUser);
             var eatingController = new EatingController(userController.CurentUser);
             var exiexerciseController = new ExerciseController(userController.CurentUser);
             while (true)
             {
-                if (userController.CurentUser==null)
-                {
-                    userController= ChangeUser();
-                }
-                Console.WriteLine($"\tТекущий пользователь {userController.CurentUser}");
-                Console.WriteLine();
-                Console.WriteLine("Что вы хотите сделать?");
-                Console.WriteLine("D - удалить текущего пользователя");
-                Console.WriteLine("C - Сменить пользователя");
-                Console.WriteLine("O - очистить экран");
-                Console.WriteLine("E - ввести прием пищи");
-                Console.WriteLine("A - ввести упражнение");
-                Console.WriteLine("U - Вывести всех пользователей");
-                Console.WriteLine("Q - выход");
-
+                printMenu(userController.CurentUser);
                 var key = Console.ReadKey();
                 switch (key.Key)
                 {
@@ -51,7 +44,13 @@ namespace BoomsaFitnessCMD
                     case ConsoleKey.C:
                         Console.Clear();
                         userController.PrintAllUsers();
-                        userController = ChangeUser();
+                        Console.Write("Введите имя =");
+                        userName = Console.ReadLine();
+                        userController.ChangeCurentUser(userName);
+                        if (userController.CurentUser == null)
+                        {
+                            userController.SetCurentUser(CreateNewUserDialog(userName));
+                        }
                         break;
                     case ConsoleKey.O:
                         Console.Clear();
@@ -84,34 +83,24 @@ namespace BoomsaFitnessCMD
             }
             Console.ReadKey();
         }
-        private static UserController ChangeUser()
-        {
-            Console.WriteLine("Введите имя пользователя");
-            var name = Console.ReadLine();
-            var userController = new UserController(name);
-            if (userController.IsNewUser)
-            {
-                string str;
-                do
-                {
-                    Console.WriteLine("Пользователь не найден. Создать нового? д/н");
-                    str = Console.ReadLine();
-                } while (!"ДднН".Contains(str));
-                if ("Дд".Contains(str))
-                {
-                    Console.WriteLine("Введите пол");
-                    var gender = Console.ReadLine();
-                    DateTime birthDate = ParseDateTime("дату рождения(dd.MM.YYYY)");
-                    var weght = ParseDouble("Вес");
-                    var hight = ParseDouble("Рост");
-                    userController.CreateNewUser(gender, birthDate, weght, hight);
-                }
-            }
 
-            return userController;
+        private static void printMenu(User curentUser)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"\tТекущий пользователь {curentUser}");
+            Console.ResetColor();
+            Console.WriteLine();
+            Console.WriteLine("Что вы хотите сделать?");
+            Console.WriteLine("D - удалить текущего пользователя");
+            Console.WriteLine("C - Сменить пользователя");
+            Console.WriteLine("O - очистить экран");
+            Console.WriteLine("E - ввести прием пищи");
+            Console.WriteLine("A - ввести упражнение");
+            Console.WriteLine("U - Вывести всех пользователей");
+            Console.WriteLine("Q - выход");
         }
 
-        private static Exercise EnterExercise(User user)
+            private static Exercise EnterExercise(User user)
         {
             Console.WriteLine("Введите название упражнения: ");
             var exerciseName = Console.ReadLine();
@@ -151,6 +140,35 @@ namespace BoomsaFitnessCMD
                     Console.WriteLine("Неверный формат даты");
                 }
             }
+        }
+        private static ConsoleKeyInfo YesOrNoQuestion(string questionString)
+        {
+            while (true)
+            {
+                Console.Write(questionString);
+                var key = Console.ReadKey();
+                if (key.Key == ConsoleKey.Y || key.Key == ConsoleKey.N)
+                    return key;
+            }
+        }
+        private static User CreateNewUserDialog(string userName)
+        {
+            var key = YesOrNoQuestion($"\nПользователь {userName} не найден. Создать нового? y/n ");
+            switch (key.Key)
+            {
+                case ConsoleKey.Y:
+                    Console.Write("Введите пол = ");
+                    var gender = Console.ReadLine();
+                    DateTime birthDate = ParseDateTime("дату рождения(dd.MM.YYYY)");
+                    var weght = ParseDouble("Вес");
+                    var hight = ParseDouble("Рост");
+                    return new User(userName, new Gender(gender), birthDate, weght, hight);
+                case ConsoleKey.N:
+                    Console.WriteLine("Пока пока");
+                    Environment.Exit(0);
+                    return null;
+            }
+            return null;
         }
         private static double ParseDouble(string name)
         {

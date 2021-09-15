@@ -12,47 +12,46 @@ namespace BoomsaFitnessBL.Controller
     /// <summary>
     /// Контроллер пользователя
     /// </summary>
-    public class UserController:ControllerBase
+    public class UserController : ControllerBase
     {
-        public bool IsNewUser { get; } = false;
         public User CurentUser { get; private set; }
-        public List <User> Users { get; private set; }
+        public List<User> Users { get; private set; }
         /// <summary>
         /// Создание нового контроллера пользователя
         /// </summary>
         /// <param name="user">Пользователь</param>
-        public UserController(string userName)
+        
+        public UserController()
         {
-            if (string.IsNullOrWhiteSpace(userName))
-            {
-                throw new ArgumentNullException("Имя пользователя не может быть пустым", nameof(userName));
-            }
             Users = GetUsersData();
-            CurentUser = Users.SingleOrDefault(u => u.Name == userName);
-            if (CurentUser==null)
-            {
-                IsNewUser = true;
-                CurentUser = new User(userName);
-                Users.Add(CurentUser);
-                Save();
-            }
         }
-        public void CreateNewUser(string genderName, DateTime birthDate, double weight = 1, double height=1)
+        public bool SetCurentUser(string userName)
         {
-            //TODO Проверка
-            CurentUser.Gender = new Gender(genderName);
-            CurentUser.BirthDate = birthDate;
-            CurentUser.Weight = weight;
-            CurentUser.Height = height;
+            CurentUser = Users.SingleOrDefault(u => u.Name == userName);
+            return CurentUser != null;
+        }
+        public bool SetCurentUser(User user)
+        {
+            CurentUser = user;
+            Users.Add(user);
             Save();
+            return CurentUser != null;
+        }
+        public User ChangeCurentUser(string name)
+        {
+            if (SetCurentUser(name))
+            {
+                return CurentUser;
+            }
+            return null;
         }
         /// <summary>
-        /// Получить сохраненный список пользоваетлей
+        /// Получить сохраненный список пользователей
         /// </summary>
-        /// <returns>сохраненный список пользоваетлей</returns>
-        private List <User> GetUsersData ()
+        /// <returns>сохраненный список пользователей</returns>
+        private List<User> GetUsersData()
         {
-            return Load<User>();
+            return Load<User>() ?? new List<User>();
         }
         /// <summary>
         /// Сохранить данные пользователя
@@ -64,7 +63,7 @@ namespace BoomsaFitnessBL.Controller
         public bool DeleteCurentUser()
         {
             var usersCount = Users.Count;
-            var sucsesfull= Users.Remove(CurentUser);
+            var sucsesfull = Users.Remove(CurentUser);
             CurentUser = null;
             Save();
             return (usersCount - 1) == Users.Count ? true : false;
@@ -72,10 +71,12 @@ namespace BoomsaFitnessBL.Controller
         public void PrintAllUsers()
         {
             var users = GetUsersData();
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
             foreach (var item in users)
             {
                 Console.WriteLine($"\t{item}");
             }
+            Console.ResetColor();
         }
     }
 }
