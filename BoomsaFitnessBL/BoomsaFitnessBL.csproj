@@ -44,6 +44,8 @@
     <Compile Include="Controller\ControllerBase.cs" />
     <Compile Include="Controller\EatingController.cs" />
     <Compile Include="Controller\ExerciseController.cs" />
+    <Compile Include="Controller\IDataSaver.cs" />
+    <Compile Include="Controller\SerializationSaver.cs" />
     <Compile Include="Controller\UserController.cs" />
     <Compile Include="Model\Activity.cs" />
     <Compile Include="Model\Eating.cs" />

@@ -12,8 +12,8 @@ using System.Xml.Linq;
 namespace BoomsaFitnessBL.Controller
 {
     public abstract class ControllerBase
-    { 
-        
+    {
+        IDataSaver dataSaver = new SerializationSaver(); 
         public event EventHandler<string> SaveFile;
         public event Action<string> LoadFile;
 
@@ -25,34 +25,15 @@ namespace BoomsaFitnessBL.Controller
         {
             Console.WriteLine($"Файл {obj} загружен");
         }
-        protected void Save(string filename, object item)
+        protected void Save <T>(List <T> item) where T:class
         {
-            var formater = new BinaryFormatter();
-            using (var fs = new FileStream(filename, FileMode.OpenOrCreate))
-            {
-                formater.Serialize(fs, item);
-            }
-
-            var args = new EventArgs();
-            SaveFile?.Invoke(this, filename);
-            //TODO Добавить событие и оповещать о том что "Был сохранен"
+            dataSaver.Save(item) ;
+            SaveFile?.Invoke(this, typeof(T)+".dat");
         }
-        protected T Load<T> (string filename)
+        protected List<T> Load<T> () where T : class
         {
-            var formater = new BinaryFormatter();
-            using (var fs = new FileStream(filename, FileMode.OpenOrCreate))
-            {
-                LoadFile?.Invoke(filename);
-                if (fs.Length > 0 && formater.Deserialize(fs) is T items)
-                {
-                    return items;
-                }
-                else
-                {
-                    return  default(T);
-                }
-            }
-
+            LoadFile?.Invoke(typeof(T) + ".dat");
+            return dataSaver.Load<T>() ?? new List<T>() ;
         }
     }
 }

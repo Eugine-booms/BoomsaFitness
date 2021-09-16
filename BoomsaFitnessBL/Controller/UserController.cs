@@ -15,7 +15,7 @@ namespace BoomsaFitnessBL.Controller
     public class UserController:ControllerBase
     {
         public bool IsNewUser { get; } = false;
-        private const string USER_FILE_NAME = "users.dat";
+       
         public User CurentUser { get; private set; }
         public List <User> Users { get; private set; }
         /// <summary>
@@ -52,19 +52,19 @@ namespace BoomsaFitnessBL.Controller
             Save();
         }
         /// <summary>
-        /// Получить сохраненный список пользоваетлей
+        /// Получить сохраненный список пользователей
         /// </summary>
-        /// <returns>сохраненный список пользоваетлей</returns>
+        /// <returns>сохраненный список пользователей</returns>
         private List <User> GetUsersData ()
         {
-          return  base.Load<List<User>>(USER_FILE_NAME) ?? new List<User>();
+          return  base.Load<User>() ?? new List<User>();
         }
         /// <summary>
         /// Сохранить данные пользователя
         /// </summary>
         public void Save()
         {
-            base.Save(USER_FILE_NAME, Users);
+            base.Save(Users);
             //TODO Добавить событие и оповещать о том что "Был сохранен"
         }
         public bool DeleteCurentUser()
