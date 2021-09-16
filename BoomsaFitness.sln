@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoomsaFitnessCMD", "BoomsaF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoomsaFitnessBLTests", "BoomsaFitnessBLTests\BoomsaFitnessBLTests.csproj", "{9E4B31A1-7C94-4346-A4DC-3F0118D451D0}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "fitness", "fitness\fitness.vdproj", "{581CB420-53F7-477D-9678-234D3E91F39D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,8 @@ Global
 		{9E4B31A1-7C94-4346-A4DC-3F0118D451D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E4B31A1-7C94-4346-A4DC-3F0118D451D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E4B31A1-7C94-4346-A4DC-3F0118D451D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{581CB420-53F7-477D-9678-234D3E91F39D}.Debug|Any CPU.ActiveCfg = Debug
+		{581CB420-53F7-477D-9678-234D3E91F39D}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -23,8 +23,9 @@ namespace BoomsaFitnessBL.Controller
         
         public UserController()
         {
-            Users = GetUsersData();
+            //Users = GetUsersData();
         }
+
         public bool SetCurentUser(string userName)
         {
             CurentUser = Users.SingleOrDefault(u => u.Name == userName);
@@ -49,9 +50,11 @@ namespace BoomsaFitnessBL.Controller
         /// Получить сохраненный список пользователей
         /// </summary>
         /// <returns>сохраненный список пользователей</returns>
-        private List<User> GetUsersData()
+        public List<User> GetUsersData()
         {
-            return Load<User>() ?? new List<User>();
+             
+            Users= Load<User>();
+            return Users;
         }
         /// <summary>
         /// Сохранить данные пользователя

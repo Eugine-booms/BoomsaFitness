@@ -16,9 +16,14 @@ namespace BoomsaFitnessBL.Controller.Tests
         [TestMethod()]
         public void UserControllerTest()
         {
-            int i = 1;
-
             var userController = new UserController();
+            Assert.AreEqual(1, 1);
+        }
+        [TestMethod()]
+        public void GetUsersDataTest()
+        {
+            var userController = new UserController();
+            var users = userController.GetUsersData();
             Assert.AreEqual(1, 1);
         }
     }

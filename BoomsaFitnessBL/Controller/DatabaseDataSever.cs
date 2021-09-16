@@ -19,12 +19,7 @@ namespace BoomsaFitnessBL.Controller
         {
             using (var db = new DbFitnessContext())
             {
-                foreach (var item1 in item)
-                {
-                    db.Set<T>().Add(item1);
-                    db.SaveChanges();
-                }
-           //     db.Set<T>().AddRange(item);
+                db.Set<T>().AddRange(item);
                 db.SaveChanges();
             }
         }
