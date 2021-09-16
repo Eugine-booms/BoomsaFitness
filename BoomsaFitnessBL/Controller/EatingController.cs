@@ -13,8 +13,8 @@ namespace BoomsaFitnessBL.Controller
         public Eating Eating { get; }
         public EatingController(User user)
         {
-            this.LoadFile += LoadingFile;
-            this.SaveFile += SavingFile;
+            this.LoadFile += (str) => Console.WriteLine($"Файл {str} загружен");
+            this.SaveFile += (s, str) => Console.WriteLine($"Файл {str} сохранен вот этим дядей {s}"); ;
             this.user = user ?? throw new ArgumentNullException(nameof(user), "Пользователь не может быть пустым");
             Foods = GetAllFoods();
             Eating = GetEating();
@@ -34,7 +34,7 @@ namespace BoomsaFitnessBL.Controller
                 Save();
             }
         }
-        public Eating GetEating()
+        private Eating GetEating()
         {
           return  Load <Eating> ().FirstOrDefault()??new Eating(user);
         }
@@ -43,7 +43,7 @@ namespace BoomsaFitnessBL.Controller
         {
             return Load<Food>();
         }
-        public void Save()
+        private void Save()
         {
             Save(Foods);
             var eatingList = new List<Eating>() { Eating };

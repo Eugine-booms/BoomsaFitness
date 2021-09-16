@@ -10,9 +10,17 @@ namespace BoomsaFitnessBL.Model
     public class Activity
     
     {
-        public string Name { get; }
-        public double CaloriesPerMinute { get;  }
+        public string Name { get; set; }
+        public double CaloriesPerMinute { get; set; }
+        ////////For Entity
+        public int Id { get; set; }
        
+        public ICollection<Exercise> Exercises { get; set; }
+        public Activity()
+        {
+        }
+
+        ////////For Entity
         public Activity (string name, double caloriesPerMinute)
         {
             Name = name ?? throw new ArgumentNullException("Имя не может быть пустым" , nameof(name));
@@ -20,6 +28,9 @@ namespace BoomsaFitnessBL.Model
                 caloriesPerMinute : 
                 throw new ArgumentException("Калории не могут быть меньше нуля ", nameof(caloriesPerMinute)); ;
         }
+
+        
+
         public override string ToString()
         {
             return Name;

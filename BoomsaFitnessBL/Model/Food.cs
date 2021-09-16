@@ -9,12 +9,24 @@ namespace BoomsaFitnessBL.Model
     [Serializable]
     public class Food
     {
-        public string Name { get; }
-        public double Proteins { get; }
-        public double Fats { get; }
-        public double Carbohydrates { get; }
-        public double Calories { get; }
-        
+        public string Name { get; set; }
+        public double Proteins { get; set; }
+        public double Fats { get; set; }
+        public double Carbohydrates { get; set; }
+        public double Calories { get; set; }
+
+
+        ////////For Entity
+        public int Id { get; set; }
+
+        public Food()
+        {
+        }
+        public int EatingId { get; set; }
+        public virtual Eating Eating { get; set; }
+
+        ////////For Entity
+
 
         public Food(string name) : this (name,1,1,1,1)
         {
@@ -51,6 +63,8 @@ namespace BoomsaFitnessBL.Model
             Carbohydrates = carbohydrates / 100.0;
             Calories = calories / 100.0;
         }
+
+       
 
         public override string ToString()
         {

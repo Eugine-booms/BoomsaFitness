@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BoomsaFitnessBL.Model
 {
@@ -12,7 +13,7 @@ namespace BoomsaFitnessBL.Model
         /// <summary>
         /// Имя
         /// </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary>
         /// Пол
         /// </summary>
@@ -50,6 +51,24 @@ namespace BoomsaFitnessBL.Model
         /// <param name="weight"> Вес </param>
         /// <param name="height"> Рост </param>
         #endregion
+        ////////For Entity
+        public int Id { get; set; }
+        public int GenderId { get; set; }
+        public ICollection<Eating> Eatings { get; set; }
+        public ICollection<Activity> Activitys { get; set; }
+        public User()
+        {
+        }
+
+        ////////For Entity
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="gender"></param>
+        /// <param name="birthDate"></param>
+        /// <param name="weight"></param>
+        /// <param name="hight"></param>
         public User(string name,
                     Gender gender,
                     DateTime birthDate,
@@ -92,9 +111,10 @@ namespace BoomsaFitnessBL.Model
             }
             Name = name;
         }
+
         public override string ToString()
         {
-            return Name+" "+Age; 
+            return Name + " " + Age;
         }
     }
 }

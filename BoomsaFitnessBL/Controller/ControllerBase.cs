@@ -21,9 +21,9 @@ namespace BoomsaFitnessBL.Controller
         {
             Console.WriteLine($"Файл {filename} сохранен вот этим дядей {sender}");
         }
-        protected void LoadingFile(string obj)
+        protected void LoadingFile(string str)
         {
-            Console.WriteLine($"Файл {obj} загружен");
+            Console.WriteLine($"Файл {str} загружен");
         }
         protected void Save <T>(List <T> item) where T:class
         {

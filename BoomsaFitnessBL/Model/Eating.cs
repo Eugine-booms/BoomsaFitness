@@ -12,9 +12,21 @@ namespace BoomsaFitnessBL.Model
     [Serializable]
    public  class Eating
     {
-        public DateTime Moment { get;}
-        public Dictionary<Food, double> Foods { get;}
-        public User User { get;}
+        public DateTime Moment { get; set; }
+        public Dictionary<Food, double> Foods { get; set; }
+        public User User { get; set; }
+
+        ////////For Entity
+        public int Id { get; set; }
+
+        public Eating()
+        {
+        }
+        public int UserId { get; set; }
+        
+
+
+        ////////For Entity
 
         public Eating (User user)
         {

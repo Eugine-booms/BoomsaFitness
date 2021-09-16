@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace BoomsaFitnessBL.Model
 {/// <summary>
 /// Пол
@@ -11,6 +13,17 @@ namespace BoomsaFitnessBL.Model
         /// Создание нового гендера
         /// </summary>
         /// <param name="Name">Имя пола</param>
+
+
+        ////////For Entity
+        public int Id { get; set; }
+        
+        public Gender()
+        {
+        }
+        public virtual ICollection<User> Users { get; set; }
+
+        ////////For Entity
         public Gender (string name)
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -20,6 +33,9 @@ namespace BoomsaFitnessBL.Model
             this.Name = name;
             
         }
+
+        
+
         public override string ToString()
         {
             return Name;
