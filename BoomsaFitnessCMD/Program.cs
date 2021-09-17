@@ -12,10 +12,8 @@ namespace BoomsaFitnessCMD
 {
     class Program
     {
-        static void Main(string[] args)
+       static void Main(string[] args)
         {
-
-
             var  culture = CultureInfo.CurrentCulture;
             var resourseManager = new ResourceManager("BoomsaFitnessCMD.Languages.Messages", typeof(Program).Assembly);
             Console.WriteLine(resourseManager.GetString("Hello", culture));
@@ -23,8 +21,6 @@ namespace BoomsaFitnessCMD
             Console.WriteLine(userController.CurentUser);
             var eatingController = new EatingController(userController.CurentUser);
             var exiexerciseController = new ExerciseController(userController.CurentUser);
-            
-
             while (true)
             {
                 if (userController.CurentUser==null)
@@ -41,6 +37,7 @@ namespace BoomsaFitnessCMD
                 Console.WriteLine("A - ввести упражнение");
                 Console.WriteLine("U - Вывести всех пользователей");
                 Console.WriteLine("Q - выход");
+                GC.Collect();
 
                 var key = Console.ReadKey();
                 switch (key.Key)
@@ -77,9 +74,10 @@ namespace BoomsaFitnessCMD
                         break;
                     case ConsoleKey.A:
                         var exercise = EnterExercise(userController.CurentUser);
+                        exiexerciseController = new ExerciseController(userController.CurentUser);
                         exiexerciseController.Add(exercise);
                         Console.Clear();
-                        Console.WriteLine(userController.CurentUser);
+                        Console.WriteLine(exiexerciseController);
                         Console.WriteLine("Активности");
                         foreach (var item in exiexerciseController.Exercises)
                         {

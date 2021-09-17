@@ -13,7 +13,7 @@ namespace BoomsaFitnessBL.Controller
 {
     public abstract class ControllerBase
     {
-        IDataSaver dataSaver = new SerializationSaver(); 
+        private readonly IDataSaver dataSaver = new SerializationSaver();
         public event EventHandler<string> SaveFile;
         public event Action<string> LoadFile;
 
@@ -24,6 +24,11 @@ namespace BoomsaFitnessBL.Controller
         protected void LoadingFile(string str)
         {
             Console.WriteLine($"Файл {str} загружен");
+        }
+        protected bool DeleteItem <T>(T item) where T : class
+        {
+           return dataSaver.Del(item);
+
         }
         protected void Save <T>(List <T> item) where T:class
         {

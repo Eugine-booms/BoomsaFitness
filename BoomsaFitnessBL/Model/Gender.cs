@@ -8,33 +8,22 @@ namespace BoomsaFitnessBL.Model
     [Serializable]
     public class Gender
     {
-        public string Name { get; }
-        /// <summary>
-        /// Создание нового гендера
-        /// </summary>
-        /// <param name="Name">Имя пола</param>
-
-
-        ////////For Entity
         public int Id { get; set; }
-        
-        public Gender()
-        {
-        }
+        public string Name { get; set; }
         public virtual ICollection<User> Users { get; set; }
-
-        ////////For Entity
-        public Gender (string name)
+        public Gender(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                throw new ArgumentNullException("Имя пола не может быть пустым или null", nameof(Gender.Name));
+                throw new ArgumentNullException("Имя пола не может быть пустым или null", nameof(name));
             }
-            this.Name = name;
-            
+
+            Name = name;
         }
 
-        
+        public Gender()
+        {
+        }
 
         public override string ToString()
         {

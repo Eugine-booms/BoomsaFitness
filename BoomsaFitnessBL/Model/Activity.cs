@@ -14,7 +14,7 @@ namespace BoomsaFitnessBL.Model
         public double CaloriesPerMinute { get; set; }
         ////////For Entity
         public int Id { get; set; }
-       
+        
         public ICollection<Exercise> Exercises { get; set; }
         public Activity()
         {
@@ -28,8 +28,6 @@ namespace BoomsaFitnessBL.Model
                 caloriesPerMinute : 
                 throw new ArgumentException("Калории не могут быть меньше нуля ", nameof(caloriesPerMinute)); ;
         }
-
-        
 
         public override string ToString()
         {

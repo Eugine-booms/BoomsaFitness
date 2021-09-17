@@ -24,7 +24,6 @@ namespace BoomsaFitnessBL.Model
         }
         public int EatingId { get; set; }
         public virtual Eating Eating { get; set; }
-
         ////////For Entity
 
 
@@ -63,12 +62,9 @@ namespace BoomsaFitnessBL.Model
             Carbohydrates = carbohydrates / 100.0;
             Calories = calories / 100.0;
         }
-
-       
-
         public override string ToString()
         {
-            return Name;
+           return Name;
         }
     }
 }

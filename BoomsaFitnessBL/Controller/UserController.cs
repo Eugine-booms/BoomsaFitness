@@ -15,7 +15,6 @@ namespace BoomsaFitnessBL.Controller
     public class UserController:ControllerBase
     {
         public bool IsNewUser { get; } = false;
-       
         public User CurentUser { get; private set; }
         public List <User> Users { get; private set; }
         /// <summary>
@@ -32,15 +31,13 @@ namespace BoomsaFitnessBL.Controller
             this.SaveFile += base.SavingFile; ;
             Users = GetUsersData();
             CurentUser = Users.SingleOrDefault(u => u.Name == userName);
-            if (CurentUser==null)
+            if (CurentUser is null)
             {
                 IsNewUser = true;
                 CurentUser = new User(userName);
                 Users.Add(CurentUser);
-                Save();
             }
         }
-
         
         public void CreateNewUser(string genderName, DateTime birthDate, double weight = 1, double height=1)
         {
@@ -59,23 +56,22 @@ namespace BoomsaFitnessBL.Controller
         {
           return  base.Load<User>() ?? new List<User>();
         }
+
+        public void DeleteCurentUser()
+        {
+            if (DeleteItem(CurentUser))
+            {
+                CurentUser = null;
+            }
+        }
         /// <summary>
         /// Сохранить данные пользователя
         /// </summary>
         public void Save()
         {
-            base.Save(Users);
+            base.Save<User>(Users);
             //TODO Добавить событие и оповещать о том что "Был сохранен"
         }
-        public bool DeleteCurentUser()
-        {
-            var usersCount = Users.Count;
-            var sucsesfull= Users.Remove(CurentUser);
-            CurentUser = null;
-            Save();
-            return (usersCount - 1) == Users.Count ? true : false;
-        }
-
         public void PrintAllUsers()
         {
             var users = GetUsersData();

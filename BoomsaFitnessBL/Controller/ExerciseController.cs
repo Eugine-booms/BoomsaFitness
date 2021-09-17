@@ -7,15 +7,15 @@ namespace BoomsaFitnessBL.Controller
 {
     public class ExerciseController :ControllerBase
     {
-        private readonly User user;
+        public User User { get; } 
         public List<Exercise> Exercises { get; }
         public List<Activity> Activitys { get;  }
 
         public ExerciseController(User user)
         {
-            this.LoadFile += LoadingFile;
-            this.SaveFile+=SavingFile;
-            this.user = user ?? throw new ArgumentNullException(nameof(user));
+            //this.LoadFile += LoadingFile;
+            //this.SaveFile+=SavingFile;
+            this.User = user ?? throw new ArgumentNullException(nameof(user));
             Exercises = GetAllExercises();
             Activitys = GetActivity();
         }
@@ -27,7 +27,7 @@ namespace BoomsaFitnessBL.Controller
 
         private List<Exercise> GetAllExercises()
         {
-            return Load <Exercise>() ?? new List<Exercise>();
+            return Load<Exercise>().Where(u => u.UserId == User.Id).ToList() ?? new List<Exercise>();
         }
         private void Save()
         {
@@ -41,13 +41,13 @@ namespace BoomsaFitnessBL.Controller
             var act = Activitys.SingleOrDefault(a => a.Name == activity.Name);
             if (act==null)
             {
-                var exercises = new Exercise(start, finish, user, activity);
+                var exercises = new Exercise(start, finish, User, activity);
                 Activitys.Add(activity);
                 Exercises.Add(exercises);
             }
             else
             {
-                var exercises = new Exercise(start, finish, user, act);
+                var exercises = new Exercise(start, finish, User, act);
                 Exercises.Add(exercises);
             }
             Save();

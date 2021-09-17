@@ -17,7 +17,8 @@ namespace BoomsaFitnessBL.Model
         /// <summary>
         /// Пол
         /// </summary>
-        public Gender Gender { get; set; }
+       
+
         /// <summary>
         /// Дата рождений 
         /// </summary>
@@ -51,14 +52,17 @@ namespace BoomsaFitnessBL.Model
         /// <param name="weight"> Вес </param>
         /// <param name="height"> Рост </param>
         #endregion
-        ////////For Entity
+       
         public int Id { get; set; }
         public int GenderId { get; set; }
-        public ICollection<Eating> Eatings { get; set; }
-        public ICollection<Activity> Activitys { get; set; }
+        public virtual Gender Gender { get; set; }
         public User()
         {
         }
+
+        public ICollection<Eating> Eatings { get; set; }
+        public ICollection<Exercise> Exercises { get; set; }
+
 
         ////////For Entity
         /// <summary>
@@ -115,6 +119,44 @@ namespace BoomsaFitnessBL.Model
         public override string ToString()
         {
             return Name + " " + Age;
+        }
+
+        public override int GetHashCode()
+        {
+            int hashCode = -421562316;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
+            hashCode = hashCode * -1521134295 + BirthDate.GetHashCode();
+            hashCode = hashCode * -1521134295 + Weight.GetHashCode();
+            hashCode = hashCode * -1521134295 + Height.GetHashCode();
+            hashCode = hashCode * -1521134295 + Age.GetHashCode();
+            hashCode = hashCode * -1521134295 + Id.GetHashCode();
+            hashCode = hashCode * -1521134295 + GenderId.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<Gender>.Default.GetHashCode(Gender);
+            hashCode = hashCode * -1521134295 + EqualityComparer<ICollection<Eating>>.Default.GetHashCode(Eatings);
+            hashCode = hashCode * -1521134295 + EqualityComparer<ICollection<Exercise>>.Default.GetHashCode(Exercises);
+            return hashCode;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (GetHashCode()!=obj.GetHashCode())
+            {
+                return false;
+            } 
+            return obj is User user &&
+                   Name == user.Name;
+        }
+        public User Clon()
+        {
+            return MemberwiseClone() as User;
+        }
+        public static bool operator ==(User user, User user1)
+        {
+            return user.Equals(user1);
+        }
+        public static bool operator !=(User user, User user1)
+        {
+            return user.Equals(user1);
         }
     }
 }

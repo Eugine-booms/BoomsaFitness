@@ -18,7 +18,7 @@ namespace BoomsaFitnessBL.Model
 
         ////////For Entity
         public int Id { get; set; }
-
+        public int FoodId { get; set; }
         public Eating()
         {
         }
